@@ -1,0 +1,52 @@
+{
+ "outdoor recreation places": [
+   {
+     "id": 1,
+     "name": "Vuon Bach Thao Ha Noi",
+     "latitude": "21.044123461517547",
+     "longitude": "105.8255352334144"
+   },
+   {
+     "id": 2,
+     "name": "Cong vien Hoa Binh",
+     "latitude": "21.066897840570853",
+     "longitude": "105.7878817567411"
+   },
+   {
+     "id": 3,
+     "name": "Bien ho Ngoc Trai",
+     "latitude": "20.99717902193941",
+     "longitude": "105.95362669316049"
+   },
+   {
+     "id": 4,
+     "name": "Cong vien thien duong Bao Son",
+     "latitude": "21.006457395038353",
+     "longitude": "105.7340441908529"
+   }, 
+   {
+     "id": 5,
+     "name": "Vuon Quoc Gia Ba Vi",
+     "latitude": "21.088243981923153",
+     "longitude": "105.36545275249291"
+   },
+   {
+     "id": 6,
+     "name": "Khu du lịch khong xanh suối Tiên",
+     "latitude": "21.050760702969608",
+     "longitude": "105.39806841118718"
+   },
+   {
+     "id": 7,
+     "name": "Cong vien Thu Le",
+     "latitude": "21.036989135846014",
+     "longitude": "105.8082481681057"
+   },
+   {
+     "id": 8,
+     "name": "Cong vien Yen So",
+     "latitude": "21.971480471245005",
+     "longitude": "105.85535554425267"
+   }
+   ]
+}

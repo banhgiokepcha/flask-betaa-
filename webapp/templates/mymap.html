@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <style>#map { height: 800px; }</style>
+</head>
+<body onload="placeMarkers()">
+    <header>
+        <a href = "#" class = "logomap">DUONG</a>
+        <ul class="navbarmap">
+            <li><a href="">Home</a></li>
+            <li><a href="#home">Location</a></li>
+
+        </ul>
+        <a class = "btn" href="{{ url_for('google.logout') }}"><button>Logout</button></a> 
+    </header>
+    
+    <div class="map" id="map"></div>
+    <script>
+        //initialize the map 
+        var map = document.getElementById('map')
+        var initmap = L.map(map).setView([21.028511, 105.804817], 11)
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(initmap);
+        var corner1 = L.latLng(20.9151, 105.7146)
+        var corner2 = L.latLng(21.06022, 105.9298)
+        bounds = L.latLngBounds(corner1, corner2)
+        initmap.fitBounds([[20.9151, 105.7146], [21.06022, 105.9298]])
+        var popup = L.popup()
+        var markers 
+
+        function SWAlert(title, text) {
+            return Swal.fire({
+                title: 'Deleted',
+                icon: 'success'
+            })
+        }
+
+        function placeMarkers(){
+            $.ajax({
+                url: '/getmarker',
+                method: 'GET',
+                success: function(data){
+                    markers = JSON.parse(data)
+                    markers.forEach((marker) => {
+                      console.log(marker.lat)
+                      L.marker([parseFloat(marker.lat), parseFloat(marker.lon)]).addTo(initmap)
+                      .bindPopup(`${marker.name} <button onclick="deleteMarker(${marker.id})">Delete</button> 
+                      <button onclick="getWeatherData(${marker.lat}, ${marker.lon})"> See weather </button>`)
+                    })
+                },
+                error: function() {
+                    console.log('Failed to retreive markers')
+                }
+            })
+        }
+
+        function getWeatherData(lat, lon) {
+            const apikey = "373b9479f182f6ae32e055d07e1e0e12"
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apikey}`;
+            return fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const weatherData = {
+                    temperature: data.main.temp,
+                    condition: data.weather[0].main,
+                    location: data.name
+                }
+                Swal.fire({
+                    title: 'Weather information',
+                    html:
+                    `<div class="card">
+                        <img src="../static/img/cloud.png" class="weather-icon">
+                        <p class="weather">Temperature: ${weatherData.temperature}</p>
+                        <p class="weather">Condition: ${weatherData.condition}</p>
+                        <p class="weather">Location: ${weatherData.location}</p>
+                    </div>`
+                })
+                
+            })
+        }
+            
+        
+
+        function addMarker(e){
+           var lat = e.latlng.lat
+           var lon = e.latlng.lng 
+           popup
+           .setLatLng(e.latlng)
+           .setContent(`<form action="/addmarker" method="POST">
+
+                <label for="fname">Name</label>
+                <input type="text" id="fname" name="Name" value= "{{ request.form['name'] }}" placeholder="Name of place: ">
+        
+                <label for="lname">Activity</label>
+                <input type="text" id="lname" name="Activity" value="{{ request.form['text'] }}" placeholder="Activity:">
+            <input type="hidden" id="lat" name="lat" value="${lat}">
+            <input type="hidden" id="lon" name="lon" value="${lon}">
+            <input type="submit" value="Submit">
+    
+        </form>`).openOn(initmap)
+        }
+
+
+        initmap.on('click', addMarker)
+
+         function deleteMarker(marker_id){
+             $.ajax({
+                url: '/delete',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ 'marker_id': marker_id}),
+                success: async function(data) {
+                    if(data==="True") {
+                        await Swal.fire({title: 'deleted', icon:'success', timer: 1500})
+                        window.location.reload()
+                    } else {
+                        await Swal.fire({title: 'Cannot delete', icon:'succes', timer: 1500})
+                        window.location.reload()
+                    }
+                }
+            })
+        }
+
+       
+        
+    </script>
+
+    
+    </div>
+
+    </body>
+</html>
+

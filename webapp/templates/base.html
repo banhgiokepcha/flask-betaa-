@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <a href = "#" class = "logo">DUONG</a>
+        <ul class="navbar">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#home">About</a></li>
+
+        </ul>
+        <a class = "btn" href="{{ url_for('google.login') }}"><button>Login</button></a> 
+    </header>
+
+    <section class="home" id="home">
+        <div class="home-text">
+            <h3> Outdoor Recreation Guide </h3>
+            <p>Travel around the world</p>
+        </div>
+        
+    </section>
+    <section class="container">
+        <div class="text">
+            <h2 class="h2"> Search and find your vacation with lots of services!</h2>
+
+        </div>
+        <div class="row-items">
+            <div class="container-box">
+                <div class="container-img">
+                    <img src="{{ url_for('static', filename='img/beach.jpg') }}">
+                </div>
+                <h3 class="heading">Nice map</h3>
+            </div>
+            <div class="container-box">
+                <div class="container-img">
+                    <img src="/static/img/mountain.jpg">
+                </div>
+                <h3 class="heading">Mountains tour</h3>
+            </div>
+            <div class="container-box">
+                <div class="container-img">
+                    <img src="../static/img/summer.jpg">
+                </div>
+                <h3 class="heading">Summer rest</h3>
+            </div>
+            <div class="container-box">
+                <div class="container-img">
+                    <img src="../static/img/camping.jpg">
+                </div>
+                <h3 class="heading">Outside camping</h3>
+            </div>
+
+        </div>
+
+    </section>
+    <section class="package">
+        <h1 class="section-title"> Beautiful places </h1>
+
+        <div class="tours-container">
+            <div class="tour-card">
+                <img src="../static/img/hanoi.jpg" class="tour-img">
+                <div class="tour-body">
+                    <h1 class="tour-name">Pho Vong</h1>
+                    <p class="tour-action">View city</p>
+
+                </div>
+
+            </div>
+
+            <div class="tour-card">
+                <img src="../static/img/park1.jpg" class="tour-img">
+                <div class="tour-body">
+                    <h1 class="tour-name">Mega Park</h1>
+                    <p class="tour-action">View city</p>
+
+                </div>
+
+            </div>
+
+            <div class="tour-card">
+                <img src="../static/img/hem6.jpg" class="tour-img">
+                <div class="tour-body">
+                    <h1 class="tour-name">Hem6</h1>
+                    <p class="tour-action">View city</p>
+
+                </div>
+
+            </div>
+
+            <div class="tour-card">
+                <img src="../static/img/park2.jpg" class="tour-img">
+                <div class="tour-body">
+                    <h1 class="tour-name">Echo Park</h1>
+                    <p class="tour-action">View city</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="tour-card">
+                <img src="../static/img/kebang.jpg" class="tour-img">
+                <div class="tour-body">
+                    <h1 class="tour-name">Kebang</h1>
+                    <p class="tour-action">View city</p>
+
+                </div>
+
+            </div>
+
+            <div class="tour-card">
+                <img src="../static/img/bacgiang.jpg" class="tour-img">
+                <div class="tour-body">
+                    <h1 class="tour-name">Quan1</h1>
+                    <p class="tour-action">View city</p>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2> Finding places </h2>
+        <p> Go to map</p>
+    </section>
+
+
+
+
+
+    {% block javascript %}
+        <script>
+            const header = document.querySelector("header");
+            window.addEventListener ("scroll", function() {
+                header.classList.toggle ("sticky", window.scrollY >0);
+            });
+        </script>
+    {% endblock %}
+
+</body>
+</html>
