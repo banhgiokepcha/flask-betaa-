@@ -10,13 +10,13 @@ class User(db.Model):
     id = db.Column(db.String(8), primary_key=True)
     email = db.Column(db.String(255))
     user_name = db.Column(db.String(255))
-    pwdhash = db.Column(db.String())
+    #pwdhash = db.Column(db.String())
 
-    def __init__(self, email, id, password, username):
+    def __init__(self, email, id, username):
         self.id = id
         self.email = email
         self.user_name = username
-        self.pwdhash = generate_password_hash(password)
+       # self.pwdhash = generate_password_hash(password)
 
     def __repr__(self):
         return '<User {}>'.format(self.user_name)

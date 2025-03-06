@@ -30,7 +30,7 @@ def create_app(object_name):
     from .auth import create_module as google_create_module
     from .main import create_module as main_create_module
     from .web import create_module as web_create_module
-    #from .web import creat
+
     with app.app_context():
      google_create_module(app)
      main_create_module(app)
@@ -38,5 +38,4 @@ def create_app(object_name):
     
     return app
     
-   # from .controllers import  
-   
+     
