@@ -98,8 +98,8 @@ def callback():
     if user is None:
         user = User(
             id=unique_id,
-            #user_name=users_email, 
-            email=users_email)
+            email=users_email,
+            username=users_email)
         db.session.add(user)
         db.session.commit()
 
